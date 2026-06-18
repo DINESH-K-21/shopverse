@@ -16,23 +16,22 @@ dotenv.config({
 const connect = await mongoose.connect(process.env.MONGODB_URI);
 
 
-const exists = await User.findOne({
-  email: "ronaldo@gmail.com",
-});
+const exists = await User.findOne({ email: "ronaldo@gmail.com" });
 
 if (!exists) {
-  const hashedPassword = await bcrypt.hash("Password@123", 10);
 
   await User.create({
     name: "Ronaldo",
     email: "ronaldo@gmail.com",
-    password: hashedPassword,
+    password: "Password@123",
     role: "superadmin",
   });
 
   console.log("Super Admin Created");
 } else {
-  console.log("Already Exists");
+  exists.password = "Password@123";
+  await exists.save();
+  console.log("Super Admin password reset");
 }
 
 await mongoose.connection.close();
