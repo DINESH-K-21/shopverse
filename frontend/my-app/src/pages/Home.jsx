@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import api from "../api/api.js"
+import ProductPost from "./ProductPost.jsx";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -20,9 +22,10 @@ function Home() {
 
   return (
     <div>
-      {products.map((product) => (
-        <h2 key={product._id}>{product.title}</h2>
-      ))}
+      <nav>
+        <Link to="/products/add">+ Product</Link>
+      
+      </nav>
     </div>
   );
 }
