@@ -6,11 +6,19 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log(email, password);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await api.post("/api/auth/login", {
+      email:email,
+      password:password,
+    });
+    console.log("Success:", res.data);
+  } catch (err) {
+    console.log("Error:", err.response?.data || err.message);
   }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4 sm:p-6">
@@ -20,7 +28,7 @@ export default function Login() {
 
           <div className="text-white text-[24px] font-bold text-center mt-1">SIGN IN</div>
 
-          <form className="w-full flex flex-col gap-4 px-6 pb-6 pt-3">
+          <form className="w-full flex flex-col gap-4 px-6 pb-6 pt-3"   onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="text-white text-[14px] font-semibold">
                 Email
@@ -53,7 +61,7 @@ export default function Login() {
             <div>
               <button
                 type="submit"
-                onClick={handleSubmit}
+              
                 className="w-full p-2 rounded-lg text-white font-semibold focus:ring-teal-500 bg-teal-500 hover:bg-teal-600 cursor-pointer"
               >
                 Login

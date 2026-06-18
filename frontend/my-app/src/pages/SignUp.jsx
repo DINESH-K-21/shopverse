@@ -1,17 +1,31 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, LineStyle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import api from "../api/api";
 
 function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log(name, email, password);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await api.post("/api/auth/signin", {
+      name,
+      email,
+      password,
+    });
+
+    console.log("Success:", res.data);
+  } catch (err) {
+    console.log("Error:", err.response?.data || err.message);
   }
+};
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4 sm:p-6">
@@ -23,7 +37,7 @@ function SignUp() {
             SIGN UP
           </div>
 
-          <form className="w-full flex flex-col gap-4 px-6 pb-6 pt-3">
+          <form className="w-full flex flex-col gap-4 px-6 pb-6 pt-3"   onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="name"
@@ -86,7 +100,6 @@ function SignUp() {
             <div>
               <button
                 type="submit"
-                onClick={handleSubmit}
                 className="w-full p-2 rounded-lg text-white font-semibold focus:ring-teal-500 bg-teal-500 hover:bg-teal-600 cursor-pointer"
               >
                 SIGN UP
