@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import PrivateRoute from "./router/PrivateRoute";
 import Home from "./pages/Home";
 import ProductPost from "./pages/ProductPost";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/products/add" element={<ProductPost />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

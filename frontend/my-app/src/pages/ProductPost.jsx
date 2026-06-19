@@ -421,7 +421,7 @@ export default function ProductPost() {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploadingImage}
-                  className="w-full px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white font-semibold flex items-center justify-center gap-2 transition"
+                  className="w-full px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white font-semibold flex items-center justify-center gap-2 transition cursor-pointer"
                 >
                   <Upload size={18} />
                   {uploadingImage ? "Uploading..." : "Upload Images from Computer"}
@@ -476,7 +476,7 @@ export default function ProductPost() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full p-3 rounded-lg text-white font-semibold bg-teal-500 hover:bg-teal-600 disabled:bg-slate-600 disabled:cursor-not-allowed transition mt-4"
+              className="w-full p-3 rounded-lg text-white font-semibold bg-teal-500 hover:bg-teal-600 disabled:bg-slate-600 disabled:cursor-not-allowed transition mt-4 cursor-pointer"
             >
               {loading ? "Creating Product..." : "Create Product"}
             </button>

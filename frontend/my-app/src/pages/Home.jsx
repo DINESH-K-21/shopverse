@@ -29,7 +29,7 @@ function Home() {
     <div>
       <Navbar/>
       
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-10 p-7">
         {products.length > 0 ? (
           products.map((product) => (
             <ProductCard key={product._id} product={product} />

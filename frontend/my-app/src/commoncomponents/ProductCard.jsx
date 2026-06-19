@@ -2,7 +2,7 @@ import { Heart, ShoppingCart, Star } from "lucide-react";
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group w-[300px]">
       {/* Image */}
       <div className="relative">
         <img
