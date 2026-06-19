@@ -6,7 +6,7 @@ const ProductCard = ({ product }) => {
       {/* Image */}
       <div className="relative">
         <img
-          src={product.images?.[0] || "https://via.placeholder.com/300"}
+          src={product.images?.[0]}
           alt={product.title}
           className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-300"
         />

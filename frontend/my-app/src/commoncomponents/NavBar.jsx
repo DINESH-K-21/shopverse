@@ -65,7 +65,7 @@ export default function Navbar() {
 
                 {role === "superadmin" && 
                     <div>
-                  <button onClick={() => navigate("/products/add")} className="text-white font-medium text-[14px] cursor-pointer"><span className="flex gap-1 justify-center items-center"><Plus size={14}/> Add Product</span></button>
+                  <button onClick={() => navigate("/products/add")} className="text-white font-medium text-[14px] cursor-pointer hover:bg-slate-800 px-4 py-2 rounded-xl transition-all"><span className="flex gap-1 justify-center items-center"><Plus size={14}/> Add Product</span></button>
                 </div>
                 }
 

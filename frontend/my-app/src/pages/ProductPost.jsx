@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { Plus, X, AlertCircle } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { Plus, X, AlertCircle, Upload } from "lucide-react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductPost() {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [imageInput, setImageInput] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
   
   const [formData, setFormData] = useState({
     title: "",
@@ -41,6 +43,74 @@ export default function ProductPost() {
       });
       setImageInput("");
       setError("");
+    }
+  };
+
+  const handleFileUpload = async (e) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    setUploadingImage(true);
+    setError("");
+
+    try {
+      for (let file of files) {
+        // Validate file type
+        if (!file.type.startsWith("image/")) {
+          setError("Please upload valid image files only");
+          setUploadingImage(false);
+          return;
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+          setError("Image size must be less than 5MB");
+          setUploadingImage(false);
+          return;
+        }
+
+        // Convert file to base64 (Option 1: Simple approach)
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const base64URL = event.target.result;
+          setFormData((prev) => ({
+            ...prev,
+            images: [...prev.images, base64URL],
+          }));
+        };
+        reader.readAsDataURL(file);
+
+        // ALTERNATIVE: Upload to your backend server
+        // Uncomment the code below and comment out the base64 approach if you want to upload to your server
+        /*
+        const formDataToUpload = new FormData();
+        formDataToUpload.append("image", file);
+
+        try {
+          const response = await api.post("/api/upload-image", formDataToUpload, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          
+          if (response.data.success && response.data.imageUrl) {
+            setFormData((prev) => ({
+              ...prev,
+              images: [...prev.images, response.data.imageUrl],
+            }));
+          }
+        } catch (err) {
+          setError("Failed to upload image: " + (err.response?.data?.message || err.message));
+        }
+        */
+      }
+    } catch (err) {
+      setError("Error processing image: " + err.message);
+    } finally {
+      setUploadingImage(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
@@ -332,39 +402,48 @@ export default function ProductPost() {
 
             {/* Images Section */}
             <div>
-              <label className="text-white text-[14px] font-semibold block mb-2">
-                Product Images (URLs)
+              <label className="text-white text-[14px] font-semibold block mb-3">
+                Product Images
               </label>
-              <div className="flex gap-2 mb-3">
+
+              {/* Upload from Computer */}
+              <div className="mb-4">
                 <input
-                  type="url"
-                  placeholder="Paste image URL and click Add"
-                  value={imageInput}
-                  onChange={(e) => setImageInput(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && addImage()}
-                  className="flex-1 px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  disabled={uploadingImage}
+                  className="hidden"
                 />
                 <button
                   type="button"
-                  onClick={addImage}
-                  className="px-4 py-2 rounded-lg bg-teal-500 hover:bg-teal-600 text-white font-semibold flex items-center gap-2 transition"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploadingImage}
+                  className="w-full px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white font-semibold flex items-center justify-center gap-2 transition"
                 >
-                  <Plus size={18} />
-                  Add
+                  <Upload size={18} />
+                  {uploadingImage ? "Uploading..." : "Upload Images from Computer"}
                 </button>
               </div>
 
               {/* Image List */}
               {formData.images.length > 0 && (
                 <div className="space-y-2">
+                  <p className="text-slate-400 text-sm mb-2">
+                    {formData.images.length} image(s) added
+                  </p>
                   {formData.images.map((img, index) => (
                     <div
                       key={index}
                       className="flex items-center justify-between p-3 bg-slate-700 rounded-lg"
                     >
-                      <span className="text-slate-300 text-sm truncate">
-                        {img}
-                      </span>
+                      {img.startsWith("data:") ? (
+                        <span className="text-slate-300 text-sm">📷 Uploaded Image {index + 1}</span>
+                      ) : (
+                        <span className="text-slate-300 text-sm truncate">{img}</span>
+                      )}
                       <button
                         type="button"
                         onClick={() => removeImage(index)}

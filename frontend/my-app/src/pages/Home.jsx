@@ -29,13 +29,13 @@ function Home() {
     <div>
       <Navbar/>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      <div className="flex flex-wrap gap-4">
         {products.length > 0 ? (
           products.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (
-          <p>No products found</p>
+          <div  className="flex items-center justify-center w-full h-screen">No products found...</div>
         )}
       </div>
     </div>
