@@ -5,7 +5,7 @@ import { superAdminOnly } from "../middleware/role.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/get-products", async (req, res) => {
   try {
     const products = await Product.find();
 
@@ -24,10 +24,7 @@ router.get("/", async (req, res) => {
 
 
 
-router.post(
-  "/",
-  protect,
-  superAdminOnly,
+router.post("/post-product",protect,superAdminOnly,
   async (req, res) => {
     try {
       const {

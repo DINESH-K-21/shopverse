@@ -88,7 +88,7 @@ export default function ProductPost() {
         discount: formData.discount ? parseFloat(formData.discount) : 0,
       };
 
-      const res = await api.post("/api/products", productData);
+      const res = await api.post("/api/products/post-product", productData);
 
       if (res.data.success) {
         setSuccess(true);
