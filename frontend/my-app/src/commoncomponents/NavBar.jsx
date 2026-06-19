@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, X, Home, User, Settings, LogOut } from "lucide-react";
+import { Menu, X, Home, User, Settings, LogOut , Plus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
@@ -28,12 +28,7 @@ export default function Navbar() {
             <div className="w-9 h-9 bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-2xl">L</span>
             </div>
-            <div>
-              <span className="text-white font-bold text-2xl tracking-tight">
-                LOGO
-              </span>
-              <span className="text-teal-400 text-sm font-medium">APP</span>
-            </div>
+           
           </div>
 
 
@@ -60,13 +55,19 @@ export default function Navbar() {
                   </div>
                   <div className="text-sm">
                     <p className="text-white font-medium">John Doe</p>
-                    <p className="text-slate-400 text-xs">Pro</p>
+      
                   </div>
+                </div>
+
+                
+
+                <div>
+                  <button onClick={() => navigate("/products/add")} className="text-white font-medium text-[14px] cursor-pointer"><span className="flex gap-1 justify-center items-center"><Plus size={14}/> Add Product</span></button>
                 </div>
 
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 px-4 py-2 text-red-400 hover:text-red-500 hover:bg-slate-800 rounded-xl transition-all"
+                  className="flex items-center gap-2 px-4 py-2 text-red-400 hover:text-red-500 hover:bg-slate-800 rounded-xl transition-all cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                   <span className="font-medium text-sm">Logout</span>

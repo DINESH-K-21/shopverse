@@ -108,7 +108,7 @@ export default function ProductPost() {
         });
 
         setTimeout(() => {
-          navigate("/products");
+          navigate("/");
         }, 2000);
       }
     } catch (err) {

@@ -53,7 +53,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Button */}
-        <button className="w-full mt-4 flex items-center justify-center gap-2 bg-black text-white py-2 rounded-lg hover:bg-gray-800">
+        <button className="w-full mt-4 flex items-center justify-center gap-2 bg-black text-white py-2 rounded-lg hover:bg-gray-800 cursor-pointer">
           <ShoppingCart size={18} />
           Add to Cart
         </button>

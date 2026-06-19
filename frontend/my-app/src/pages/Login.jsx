@@ -1,27 +1,23 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, LineStyle } from "lucide-react";
-import { Link, Navigate } from "react-router-dom";
-import api from "../api/api";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../store/authSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { status, error, token } = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await api.post("/api/auth/login", {
-        email: email,
-        password: password,
-      });
-      localStorage.setItem("token", res.data.token);
-      console.log("Success:", res.data);
+    const resultAction = await dispatch(loginUser({ email, password }));
+    if (loginUser.fulfilled.match(resultAction)) {
       navigate("/");
-    } catch (err) {
-      console.log("Error:", err.response?.data || err.message);
     }
   };
 
