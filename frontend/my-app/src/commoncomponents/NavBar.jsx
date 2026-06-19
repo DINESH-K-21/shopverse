@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Menu, X, Home, User, Settings, LogOut , Plus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  const role = user?.role
+  
 
   const isLoggedIn = !!localStorage.getItem("token");
 
@@ -59,11 +63,11 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                
-
-                <div>
+                {role === "superadmin" && 
+                    <div>
                   <button onClick={() => navigate("/products/add")} className="text-white font-medium text-[14px] cursor-pointer"><span className="flex gap-1 justify-center items-center"><Plus size={14}/> Add Product</span></button>
                 </div>
+                }
 
                 <button
                   onClick={handleLogout}
