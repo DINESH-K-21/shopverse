@@ -18,16 +18,17 @@ export default function Navbar() {
 
   // Get user initials
   const getInitials = () => {
-    if (user?.firstName && user?.lastName) {
-      return `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
+
+    if (user?.name ) {
+      return `${user.name[0].toUpperCase()}`;
     }
     return "U";
   };
 
   // Get full name
   const getFullName = () => {
-    if (user?.firstName && user?.lastName) {
-      return `${user.firstName} ${user.lastName}`;
+    if (user?.name ) {
+      return `${user.name}`;
     }
     return "User";
   };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowLeft, Edit2, Save, X, Mail, Phone, MapPin, Calendar } from "lucide-react";
+import { ArrowLeft, Edit2, Save, X, Mail, Phone, MapPin, Calendar , Key } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../api/api";
@@ -8,6 +8,9 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
+  console.log(user,"jj");
+  
   const role = user?.role
 
   const [isEditing, setIsEditing] = useState(false);
@@ -16,15 +19,10 @@ export default function ProfilePage() {
   const [success, setSuccess] = useState("");
   
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
-    phone: "",
-    address: "",
-    city: "",
-    country: "",
-    dateOfBirth: "",
-    bio: "",
+    currentPassword:"",
+    newPassword:""
   });
 
   const [originalData, setOriginalData] = useState(formData);
@@ -33,15 +31,8 @@ export default function ProfilePage() {
     // Load user data when component mounts
     if (user) {
       const userData = {
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
+        name: user.name || "",
         email: user.email || "",
-        phone: user.phone || "",
-        address: user.address || "",
-        city: user.city || "",
-        country: user.country || "",
-        dateOfBirth: user.dateOfBirth || "",
-        bio: user.bio || "",
       };
       setFormData(userData);
       setOriginalData(userData);
@@ -75,8 +66,8 @@ export default function ProfilePage() {
 
     try {
       // Validate required fields
-      if (!formData.firstName || !formData.lastName || !formData.email) {
-        setError("Please fill in all required fields (First Name, Last Name, Email)");
+      if (!formData.name || !formData.email) {
+        setError("Please fill in all required fields (Name, Email)");
         setLoading(false);
         return;
       }
@@ -186,37 +177,24 @@ export default function ProfilePage() {
                 {/* First Name */}
                 <div>
                   <label className="text-slate-300 text-sm font-semibold block mb-2">
-                    First Name *
+                    Name 
                   </label>
                   <input
                     type="text"
-                    name="firstName"
-                    value={formData.firstName}
+                    name="name"
+                    value={formData.name}
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     className="w-full px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
                   />
                 </div>
 
-                {/* Last Name */}
-                <div>
-                  <label className="text-slate-300 text-sm font-semibold block mb-2">
-                    Last Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
-                  />
-                </div>
+               
 
                 {/* Email */}
                 <div>
                   <label className="text-slate-300 text-sm font-semibold block mb-2 flex items-center gap-2">
-                    <Mail size={16} /> Email *
+                    <Mail size={16} /> Email 
                   </label>
                   <input
                     type="email"
@@ -228,100 +206,42 @@ export default function ProfilePage() {
                   />
                 </div>
 
-                {/* Phone */}
+                {/* current password */}
                 <div>
                   <label className="text-slate-300 text-sm font-semibold block mb-2 flex items-center gap-2">
-                    <Phone size={16} /> Phone
+                    <Key size={16} /> Current Password 
                   </label>
                   <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
+                    type="password"
+                    name="currentPassword"
+                    value={formData.currentPassword}
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     className="w-full px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
                   />
                 </div>
 
-                {/* Date of Birth */}
+                {/* new password */}
                 <div>
                   <label className="text-slate-300 text-sm font-semibold block mb-2 flex items-center gap-2">
-                    <Calendar size={16} /> Date of Birth
+                    <Key size={16} /> New Password
                   </label>
                   <input
-                    type="date"
-                    name="dateOfBirth"
-                    value={formData.dateOfBirth}
+                    type="password"
+                    name="newPassword"
+                    value={formData.newPassword}
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     className="w-full px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
                   />
                 </div>
+
               </div>
 
-              {/* Bio */}
-              <div className="mt-6">
-                <label className="text-slate-300 text-sm font-semibold block mb-2">Bio</label>
-                <textarea
-                  name="bio"
-                  value={formData.bio}
-                  onChange={handleInputChange}
-                  disabled={!isEditing}
-                  rows="3"
-                  className="w-full px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed resize-none"
-                  placeholder="Tell us about yourself..."
-                />
-              </div>
+             
             </div>
 
-            {/* Address Information */}
-            <div className="mb-8">
-              <h2 className="text-white text-lg font-bold mb-6">Address Information</h2>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Address */}
-                <div className="sm:col-span-2">
-                  <label className="text-slate-300 text-sm font-semibold block mb-2 flex items-center gap-2">
-                    <MapPin size={16} /> Street Address
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
-                  />
-                </div>
-
-                {/* City */}
-                <div>
-                  <label className="text-slate-300 text-sm font-semibold block mb-2">City</label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
-                  />
-                </div>
-
-                {/* Country */}
-                <div>
-                  <label className="text-slate-300 text-sm font-semibold block mb-2">Country</label>
-                  <input
-                    type="text"
-                    name="country"
-                    value={formData.country}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
-                    className="w-full px-4 py-2 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:opacity-60 disabled:cursor-not-allowed"
-                  />
-                </div>
-              </div>
-            </div>
-
+          
             {/* Action Buttons */}
             {isEditing && (
               <div className="flex gap-4 justify-end border-t border-slate-700 pt-8">
