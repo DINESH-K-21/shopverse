@@ -8,7 +8,8 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  
+  const role = user?.role
+
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -344,7 +345,7 @@ export default function ProfilePage() {
               </div>
             )}
 
-            {!isEditing && (
+            {!isEditing && role === "superadmin" && (
               <div className="border-t border-slate-700 pt-8">
                 <button
                   type="button"

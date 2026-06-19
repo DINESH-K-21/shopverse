@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, X, Home, User, Settings, LogOut, Plus } from "lucide-react";
+import { Menu, X, Home, User, Settings, LogOut, Plus ,ShoppingCart} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -35,7 +35,7 @@ export default function Navbar() {
   const navLinks = [
     { name: "Home", path: "/", icon: Home },
     { name: "Dashboard", path: "/dashboard", icon: User },
-    { name: "Cart", path: "/cart", icon: Settings },
+    { name: "Cart", path: "/cart", icon: ShoppingCart },
   ];
 
   return (
