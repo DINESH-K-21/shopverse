@@ -3,6 +3,7 @@ import { ArrowLeft, Edit2, Save, X, Mail, Phone, MapPin, Calendar , Key } from "
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../api/api";
+import { setCredentials } from "../store/authSlice";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
@@ -72,12 +73,16 @@ export default function ProfilePage() {
         return;
       }
 
-      const response = await api.put("/api/users/profile", formData);
+      const response = await api.put("/api/auth/profile", formData);
 
       if (response.data.success) {
         setSuccess("Profile updated successfully!");
         setOriginalData(formData);
         setIsEditing(false);
+        dispatch(setCredentials({ 
+    token: localStorage.getItem("token"), // Keep existing token
+    user: response.data.user // Assuming your API returns the updated user object
+  }));
         
         // Update Redux store with new user data
         // You might need to dispatch an action here depending on your setup
@@ -97,7 +102,7 @@ export default function ProfilePage() {
     if (window.confirm("Are you sure you want to delete your profile? This action cannot be undone.")) {
       try {
         setLoading(true);
-        const response = await api.delete("/api/users/profile");
+        const response = await api.delete("/api/auth/profile");
 
         if (response.data.success) {
           localStorage.removeItem("token");
