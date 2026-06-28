@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, LineStyle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import api from "../api/api";
+import { api, productApi } from "../api/api.js";
 
 function SignUp() {
   const [name, setName] = useState("");

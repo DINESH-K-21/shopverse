@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const api = axios.create({baseURL: "http://localhost:3000/"});
+export const api = axios.create({baseURL: "http://localhost:3000/"});
+ export const productApi = axios.create({baseURL: "http://localhost:4000/"});
 
 api.interceptors.request.use(
   (config) => {
@@ -14,5 +15,3 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-export default api;

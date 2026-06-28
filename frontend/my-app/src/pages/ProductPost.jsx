@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Plus, X, AlertCircle, Upload } from "lucide-react";
-import api from "../api/api";
+import { api, productApi } from "../api/api.js";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductPost() {
@@ -158,7 +158,7 @@ export default function ProductPost() {
         discount: formData.discount ? parseFloat(formData.discount) : 0,
       };
 
-      const res = await api.post("/api/products/post-product", productData);
+      const res = await productApi.post("/api/products/post-product", productData);
 
       if (res.data.success) {
         setSuccess(true);

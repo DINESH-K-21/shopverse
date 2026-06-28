@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import api from "../api/api.js"
+import { api, productApi } from "../api/api.js";
+
 import ProductPost from "./ProductPost.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../commoncomponents/NavBar.jsx";
@@ -15,7 +16,7 @@ function Home() {
   useEffect(() => {
     const getProducts = async () => {
       try {
-       const res = await api.get("/api/products/get-products");
+       const res = await productApi.get("/api/products/get-products");
         setProducts(res.data.products);
       } catch (err) {
         console.log(err);

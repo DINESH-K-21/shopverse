@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ArrowLeft, Edit2, Save, X, Mail, Phone, MapPin, Calendar , Key } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import api from "../api/api";
+import { api, productApi } from "../api/api.js";
 import { setCredentials } from "../store/authSlice";
 
 export default function ProfilePage() {
