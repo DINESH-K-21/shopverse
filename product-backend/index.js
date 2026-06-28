@@ -13,6 +13,9 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("product-service is running on PORT 4000!");
+});
 
 app.use("/api/products", ProductRoutes);
 const PORT = process.env.PORT || 4000;

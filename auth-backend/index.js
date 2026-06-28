@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import connectDB from "./mongodb/db.js";
 import cors from "cors";
 import userRoutes from "./mongodb/routes/UserRoutes.js";
-import ProductRoutes from "../product-backend/mongodb/routes/ProductRoutes.js";
 
 dotenv.config();
 
@@ -14,8 +13,12 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("auth-service is running on PORT 3000!");
+});
+
 app.use("/api/auth", userRoutes);
-app.use("/api/products", ProductRoutes);
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
