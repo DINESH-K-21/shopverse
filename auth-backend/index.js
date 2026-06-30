@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
   res.send("auth-service is running on PORT 3000!");
 });
 
-app.use("/api/auth", userRoutes);
+app.use("/", userRoutes);
 
 
 app.listen(PORT, () => {
