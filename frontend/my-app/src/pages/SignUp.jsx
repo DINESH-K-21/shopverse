@@ -13,7 +13,7 @@ function SignUp() {
   e.preventDefault();
 
   try {
-    const res = await api.post("/api/auth/signin", {
+    const res = await api.post("/signin", {
       name,
       email,
       password,
