@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.send(`product-service is running on PORT ${PORT}!`);
 });
 
-app.use("/api/products", ProductRoutes);
+app.use("/", ProductRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
