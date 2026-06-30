@@ -73,7 +73,7 @@ export default function ProfilePage() {
         return;
       }
 
-      const response = await api.put("/api/auth/profile", formData);
+      const response = await api.put("/profile", formData);
 
       if (response.data.success) {
         setSuccess("Profile updated successfully!");
@@ -102,7 +102,7 @@ export default function ProfilePage() {
     if (window.confirm("Are you sure you want to delete your profile? This action cannot be undone.")) {
       try {
         setLoading(true);
-        const response = await api.delete("/api/auth/profile");
+        const response = await api.delete("/profile");
 
         if (response.data.success) {
           localStorage.removeItem("token");
