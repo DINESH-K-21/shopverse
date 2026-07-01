@@ -1,7 +1,7 @@
 import express from "express";
 import Product from "../modules/ProductSchema.js";
-import { protect } from "../../../product-backend/mongodb/middleware/auth.js";
-import { superAdminOnly } from "../../../product-backend/mongodb/middleware/role.js";
+import { protect } from "../../mongodb/middleware/auth.js";
+import { superAdminOnly } from "../../mongodb/middleware/role.js";
 
 const router = express.Router();
 

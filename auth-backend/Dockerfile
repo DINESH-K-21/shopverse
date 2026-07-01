@@ -1,13 +1,12 @@
+
 FROM node:22-alpine
-
-WORKDIR /auth-backend
-
+WORKDIR /app
+ 
 COPY package*.json ./
-
-RUN npm install
-
+RUN npm install --production
+ 
 COPY . .
-
+ 
 EXPOSE 3000
-
+ 
 CMD ["npm", "start"]
