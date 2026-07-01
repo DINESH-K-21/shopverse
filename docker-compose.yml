@@ -30,12 +30,12 @@ services:
       - app-network
 
   nginx:
-    image: nginx:alpine
-    container_name: nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     ports:
-      - "5000:80"     # localhost:5000 -> nginx:80
+      - "5000:80"
     depends_on:
-      - frontend
       - auth-service
       - product-service
     networks:
